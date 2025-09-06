@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import HeightPermitForm from "./HeightPermitForm"; // adjust path if needed
+import ElectricPermitForm from "./ElectricPermitForm"; // adjust path if needed
 
 interface Permit {
   id: string;
@@ -17,7 +18,8 @@ interface Permit {
 
 const SseMaintenanceDashboard = () => {
   const [permits, setPermits] = useState<Permit[]>([]);
-  const [showForm, setShowForm] = useState(false);
+  const [showHeightForm, setShowHeightForm] = useState(false);
+  const [showElectricForm, setShowElectricForm] = useState(false);
 
   // Fetch permits from backend (or fallback to mock)
   async function fetchPermits() {
@@ -109,20 +111,28 @@ const SseMaintenanceDashboard = () => {
           ))}
         </div>
 
-        {/* Floating Add button */}
-        <div className="fixed bottom-6 right-6">
+        {/* Floating Add buttons */}
+        <div className="fixed bottom-6 right-6 flex flex-col gap-3">
           <Button
             variant="fab"
             size="fab"
-            onClick={() => setShowForm(true)}
-            title="New Permit"
+            onClick={() => setShowHeightForm(true)}
+            title="New Height Permit"
           >
-            <span className="material-icons text-xl">add</span>
+            + Height
+          </Button>
+          <Button
+            variant="fab"
+            size="fab"
+            onClick={() => setShowElectricForm(true)}
+            title="New Electric Permit"
+          >
+            + Electric
           </Button>
         </div>
 
         {/* Modal with HeightPermitForm */}
-        {showForm && (
+        {showHeightForm && (
           <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto z-50">
             <div className="min-h-screen flex items-start justify-center py-10">
               <div className="bg-white rounded-xl shadow-lg w-full max-w-6xl">
@@ -130,7 +140,7 @@ const SseMaintenanceDashboard = () => {
                   <h2 className="text-xl font-bold">New Height Permit</h2>
                   <button
                     className="text-gray-500 hover:text-gray-800"
-                    onClick={() => setShowForm(false)}
+                    onClick={() => setShowHeightForm(false)}
                   >
                     ✕
                   </button>
@@ -138,7 +148,34 @@ const SseMaintenanceDashboard = () => {
                 <div className="p-6">
                   <HeightPermitForm
                     onCreated={() => {
-                      setShowForm(false);
+                      setShowHeightForm(false);
+                      fetchPermits();
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal with ElectricPermitForm */}
+        {showElectricForm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto z-50">
+            <div className="min-h-screen flex items-start justify-center py-10">
+              <div className="bg-white rounded-xl shadow-lg w-full max-w-6xl">
+                <div className="flex justify-between items-center p-4 border-b">
+                  <h2 className="text-xl font-bold">New Electric Permit</h2>
+                  <button
+                    className="text-gray-500 hover:text-gray-800"
+                    onClick={() => setShowElectricForm(false)}
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="p-6">
+                  <ElectricPermitForm
+                    onCreated={() => {
+                      setShowElectricForm(false);
                       fetchPermits();
                     }}
                   />
