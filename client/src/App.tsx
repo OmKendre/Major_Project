@@ -9,6 +9,7 @@ import SseMaintenanceDashboard from "./pages/SseMaintenanceDashboard"; // <-- Im
 import SseShopDashboard from "./pages/SseShopDashboard";             // <-- Import new component
 import SafetyOfficerDashboard from "./pages/SafetyOfficerDashboard";
 import NotFound from "./pages/NotFound";
+import HeightPermitForm from "./pages/HeightPermitForm"; // <-- Import new component
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ const App = () => (
           <Route path="/dashboard/sse-maintenance" element={<SseMaintenanceDashboard />} />
           <Route path="/dashboard/sse-shop" element={<SseShopDashboard />} />
           <Route path="/dashboard/safety-officer" element={<SafetyOfficerDashboard />} />
-          
+          <Route path="/permits/height/new" element={<HeightPermitForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
