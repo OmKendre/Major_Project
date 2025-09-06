@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Material Design Color System - Google's Material Design Palette */
+
+@layer base {
+  :root {
+    /* Material Design Colors - converted to HSL */
+    --md-primary: 217 89% 51%; /* #1A73E8 - Primary Blue */
+    --md-primary-variant: 214 100% 59%; /* #4285F4 - Lighter Blue */
+    --md-background: 210 16% 98%; /* #F8F9FA - Light Gray Background */
+    --md-surface: 0 0% 100%; /* #FFFFFF - White Surface/Cards */
+    --md-text-primary: 214 12% 25%; /* #3C4043 - Primary Text */
+    --md-text-secondary: 214 7% 46%; /* #5F6368 - Secondary Text */
+    --md-border: 214 15% 91%; /* #E8EAED - Subtle Gray Borders */
+    --md-error: 4 90% 58%; /* #D93025 - Error Red */
+    --md-success: 122 39% 49%; /* #34A853 - Success Green */
+    --md-warning: 45 100% 51%; /* #FBBC04 - Warning Orange */
+    
+    /* Material Design Elevations */
+    --md-elevation-1: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
+    --md-elevation-2: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+    --md-elevation-3: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
+    --md-elevation-4: 0px 14px 28px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.22);
+    
+    /* Shadcn compatibility mapping */
+    --background: var(--md-background);
+    --foreground: var(--md-text-primary);
+    --card: var(--md-surface);
+    --card-foreground: var(--md-text-primary);
+    --popover: var(--md-surface);
+    --popover-foreground: var(--md-text-primary);
+    --primary: var(--md-primary);
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 15% 95%;
+    --secondary-foreground: var(--md-text-primary);
+    --muted: var(--md-border);
+    --muted-foreground: var(--md-text-secondary);
+    --accent: var(--md-primary);
+    --accent-foreground: 0 0% 100%;
+    --destructive: var(--md-error);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--md-border);
+    --input: var(--md-border);
+    --ring: var(--md-primary);
+    --radius: 0.25rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  /* Material Design utility classes */
+  .md-elevation-1 {
+    box-shadow: var(--md-elevation-1);
+  }
+  
+  .md-elevation-2 {
+    box-shadow: var(--md-elevation-2);
+  }
+  
+  .md-elevation-3 {
+    box-shadow: var(--md-elevation-3);
+  }
+  
+  .md-elevation-4 {
+    box-shadow: var(--md-elevation-4);
+  }
+  
+  .material-icons {
+    font-feature-settings: 'liga';
+  }
+}

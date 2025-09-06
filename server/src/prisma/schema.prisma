@@ -1,0 +1,154 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  schemas   = ["electric_permit", "height_permit", "public"]
+}
+
+model User {
+  id                      String          @id @default(cuid())
+  email                   String          @unique
+  name                    String
+  password                String
+  role                    Role
+  specialization          Specialization?
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+
+  createdElectricPermits  ElectricPermit[] @relation("CreatedByElectric")
+  approvedElectricPermits ElectricPermit[] @relation("ApprovedByElectric")
+  createdHeightPermits    HeightPermit[]   @relation("CreatedByHeight")
+  approvedHeightPermits   HeightPermit[]   @relation("ApprovedByHeight")
+
+  @@schema("public")
+}
+
+model ElectricPermit {
+  permit_id                         Int          @id @default(autoincrement())
+  unit_name                         String
+  equipment_tag_no                  String
+  operation_in_charge_name          String
+  operation_in_charge_date          DateTime?    @db.Date
+  requirement_emergency             Boolean
+  equipment_not_in_operation        Boolean?
+  ordinary_permit                   Boolean?
+  locks_tags_removed                Boolean?
+  equipment_earthing_intact         Boolean?
+  loto_operation_local_switch       Boolean?
+  clearance_certificate_returned    Boolean?
+  job_completion_certificate_returned Boolean?
+  energise_requested_by_name      String?
+  energise_requested_by_date      DateTime?    @db.Date
+  de_energized_on                   DateTime?    @db.Date
+  power_fuse_status                 String?
+  breaker_control_plug_status       String?
+  breaker_test_ok                   Boolean?
+  trip_circuit_healthy              Boolean?
+  breaker_racked_in_service_position Boolean?
+  control_supply_switched_on        Boolean?
+  space_heater_switched_on          Boolean?
+  breaker_mcc_front_closed          Boolean?
+  mcc_module_switched_on            Boolean?
+  lid_panel_opened                  Boolean?
+  line_discharged_test_done         Boolean?
+  temporary_safety_ground           Boolean?
+  breaker_mcc_checked               Boolean?
+  loto_performed_breaker_mcc        Boolean?
+  final_signed_by                   String?
+  final_signed_date                 DateTime?    @db.Date
+  final_signed_time                 DateTime?    @db.Time
+  final_signed_designation          String?
+  final_signature_image             Bytes?
+  status                            PermitStatus @default(PENDING)
+  createdById                       String
+  creator                           User         @relation("CreatedByElectric", fields: [createdById], references: [id])
+  approverId                        String?
+  approver                          User?        @relation("ApprovedByElectric", fields: [approverId], references: [id])
+
+  @@map("permit")
+  @@schema("electric_permit")
+}
+
+model HeightPermit {
+  permit_id                     Int          @id @default(autoincrement())
+  date                          DateTime     @db.Date
+  person_responsible            String
+  work_location                 String
+  work_description              String
+  schedule_start                DateTime
+  schedule_end                  DateTime
+  fall_type                     String
+  fall_description              String?
+  fall_tested                   String?
+  hazard_environment            String
+  hazard_assessed               Boolean
+  work_can_proceed              Boolean
+  on_crane                      Boolean?
+  crane_description             String?
+  ppe_full_harness_checked      Boolean
+  ppe_shoes_provided            Boolean
+  ppe_helmet_provided           Boolean
+  access_fixed_ladder           Boolean?
+  access_elevated_platform      Boolean?
+  access_scissor_lift           Boolean?
+  access_boom_lift              Boolean?
+  access_catwalk                Boolean?
+  access_key_control            String?
+  electrical_isolation_obtained Boolean
+  isolation_time_from           DateTime?    @db.Time
+  isolation_time_to             DateTime?    @db.Time
+  other_isolation_required      Boolean?
+  other_isolation_description   String?
+  staff_1_name                  String
+  staff_1_tno                   String
+  staff_1_signature             String
+  staff_1_work                  String
+  responsible_person_name       String
+  responsible_signature         String
+  authorizing_name              String
+  authorizing_signature         String
+  safety_officer_name           String
+  safety_signature              String
+  safety_date                   DateTime     @db.Date
+  responsible_date              DateTime     @db.Date
+  authorizing_date              DateTime     @db.Date
+  job_completion_date           DateTime     @db.Date
+  job_completion_time           DateTime     @db.Time
+  completion_signature          String
+  completion_signed_by          String
+  completion_signed_date        DateTime     @db.Date
+  status                        PermitStatus @default(PENDING)
+  createdById                   String
+  creator                       User         @relation("CreatedByHeight", fields: [createdById], references: [id])
+  approverId                    String?
+  approver                      User?        @relation("ApprovedByHeight", fields: [approverId], references: [id])
+
+  @@map("permit")
+  @@schema("height_permit")
+}
+
+enum Role {
+  SSE_MAINTENANCE
+  SSE_SHOP
+  SAFETY_OFFICER
+  @@schema("public")
+}
+
+enum Specialization {
+  MW
+  SUBSTATION
+  @@schema("public")
+}
+
+enum PermitStatus {
+  PENDING
+  APPROVED
+  ONGOING
+  CLOSED
+  DENIED
+  @@schema("public")
+}
