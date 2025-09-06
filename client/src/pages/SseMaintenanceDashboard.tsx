@@ -112,24 +112,27 @@ const SseMaintenanceDashboard = () => {
         </div>
 
         {/* Floating Add buttons */}
-        <div className="fixed bottom-6 right-6 flex flex-col gap-3">
-          <Button
-            variant="fab"
-            size="fab"
-            onClick={() => setShowHeightForm(true)}
-            title="New Height Permit"
-          >
-            + Height
-          </Button>
-          <Button
-            variant="fab"
-            size="fab"
-            onClick={() => setShowElectricForm(true)}
-            title="New Electric Permit"
-          >
-            + Electric
-          </Button>
-        </div>
+<div className="fixed bottom-6 right-6 flex flex-col gap-3">
+  <Button
+    variant="default"   // changed from "fab"
+    size="default"      // changed from "fab"
+    onClick={() => setShowHeightForm(true)}
+    title="New Height Permit"
+    className="px-4 py-2 rounded-lg shadow-lg"
+  >
+     Height Permit
+  </Button>
+  <Button
+    variant="default"
+    size="default"
+    onClick={() => setShowElectricForm(true)}
+    title="New Electric Permit"
+    className="px-4 py-2 rounded-lg shadow-lg"
+  >
+     Electric Permit
+  </Button>
+</div>
+
 
         {/* Modal with HeightPermitForm */}
         {showHeightForm && (
